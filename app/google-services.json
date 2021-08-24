@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "558732833656",
+    "project_id": "cryptotracker-dbc6a",
+    "storage_bucket": "cryptotracker-dbc6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558732833656:android:e3594f06503eeb7f08ce8d",
+        "android_client_info": {
+          "package_name": "com.example.cryptotracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "558732833656-iftoda0mcc0895gqnlqtntk5o93eii02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF9J5MAsSJbaC_0uqEkfNhHp4buaesExs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "558732833656-iftoda0mcc0895gqnlqtntk5o93eii02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

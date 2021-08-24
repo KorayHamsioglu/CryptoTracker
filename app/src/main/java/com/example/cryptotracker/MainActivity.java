@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,21 +37,39 @@ public class MainActivity extends AppCompatActivity {
    private Adapter adapter;
     private ArrayList<String> isimler;
     private  ArrayList<Double> fiyatlar;
+    private ArrayList<String> semboller;
+    private Button btnCrash;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseApp.initializeApp(this);
         editText=findViewById(R.id.searchTxt);
+        btnCrash=findViewById(R.id.btnCrash);
         RV=findViewById(R.id.RV);
         RV.setLayoutManager(new LinearLayoutManager(this));
         RV.setHasFixedSize(true);
         isimler=new ArrayList<String>();
         fiyatlar=new ArrayList<Double>();
+        semboller =new ArrayList<String>();
 
-       adapter=new Adapter(this,isimler,fiyatlar);
+       adapter=new Adapter(this,isimler,fiyatlar,semboller);
        RV.setAdapter(adapter);
         getData();
+
+        firebaseAnalytics=FirebaseAnalytics.getInstance(this);
+
+        btnCrash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                throw new RuntimeException("Test crash");
+            }
+        });
+
+
 
        editText.addTextChangedListener(new TextWatcher() {
            @Override
@@ -99,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
                     for(int i=0;i<data.length();i++){
                         JSONObject dataObj=data.getJSONObject(i);
                         String name=dataObj.getString("name");
+                        String sembol=dataObj.getString("symbol");
                         isimler.add(name);
+                        semboller.add(sembol);
                         JSONObject quote=dataObj.getJSONObject("quote");
                         JSONObject USD=quote.getJSONObject("USD");
                         double price=USD.getDouble("price");
